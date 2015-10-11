@@ -1,0 +1,59 @@
+{
+  "name": "gulp-importify",
+  "description": "Gulp-plugin for using css (scss, less, stylus) imports for files from multiple source.",
+  "version": "0.0.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artem-malko/gulp-importify.git"
+  },
+  "author": {
+    "name": "Artem Malko",
+    "email": "artem.malko@gmail.com"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulp",
+    "gulpplugin",
+    "import",
+    "css",
+    "sass",
+    "scss",
+    "less",
+    "stylus"
+  ],
+  "dependencies": {
+    "concat-with-sourcemaps": "^1.0.0",
+    "gulp-util": "^3.0.1",
+    "through2": "^0.6.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sourcemaps": "^1.1.4",
+    "istanbul": "^0.3.2",
+    "mocha": "^2.0.1",
+    "mocha-lcov-reporter": "0.0.1",
+    "should": "^5.0.0",
+    "stream-array": "^1.0.1",
+    "stream-assert": "^2.0.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/artem-malko/gulp-importify/issues"
+  },
+  "homepage": "https://github.com/artem-malko/gulp-importify#readme",
+  "maintainers": [
+    {
+      "name": "Artem Malko",
+      "email": "artem.malko@gmail.com"
+    }
+  ]
+}
