@@ -73,6 +73,7 @@ module.exports = function(file, options) {
         switch (options.cssPreproc) {
             case 'scss':
             case 'sass':
+            case 'less':
                 if (extension === 'css') {
                     importified.add(file.relative, file.contents, file.sourceMap);
                 } else {
@@ -80,7 +81,6 @@ module.exports = function(file, options) {
                 }
                 break;
             case 'stylus':
-            case 'less':
                 importified.add(file.relative, '@import "' + file.relative + '";\n', file.sourceMap);
                 break;
             default:
