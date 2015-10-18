@@ -1,4 +1,4 @@
-var concat = require('../');
+var importify = require('../');
 var should = require('should');
 var fs = require('fs');
 var path = require('path');
@@ -15,7 +15,7 @@ var thirdBase = __dirname,
     thirdFile = 'third.js',
     thirdPath = path.join(thirdBase, thirdFile);
 
-describe('gulp-concat', function() {
+describe('gulp-importify', function() {
 
 
   // Create a third fixture, so we'll know it has the latest modified stamp.
@@ -30,15 +30,15 @@ describe('gulp-concat', function() {
     fs.unlink(thirdPath, done);
   });
 
-  describe('concat()', function() {
+  describe('improtify()', function() {
     it('should throw, when arguments is missing', function () {
       (function() {
-        concat();
-      }).should.throw('Missing file option for gulp-concat');
+        importify();
+      }).should.throw('Missing file option for gulp-importify');
     });
 
     it('should ignore null files', function (done) {
-      var stream = concat('test.js');
+      var stream = importify('test.js');
       stream
         .pipe(assert.length(0))
         .pipe(assert.end(done));
@@ -48,32 +48,32 @@ describe('gulp-concat', function() {
 
     it('should emit error on streamed file', function (done) {
       gulp.src(fixtures('*'), { buffer: false })
-        .pipe(concat('test.js'))
+        .pipe(importify('test.js'))
         .on('error', function (err) {
           err.message.should.eql('Streaming not supported');
           done();
         });
     });
 
-    it('should concat one file', function (done) {
+    it('should importify one file', function (done) {
       test('wadap')
-        .pipe(concat('test.js'))
+        .pipe(importify('test.js'))
         .pipe(assert.length(1))
         .pipe(assert.first(function (d) { d.contents.toString().should.eql('wadap'); }))
         .pipe(assert.end(done));
     });
 
-    it('should concat multiple files', function (done) {
+    it('should importify multiple files', function (done) {
       test('wadap', 'doe')
-        .pipe(concat('test.js'))
+        .pipe(importify('test.js'))
         .pipe(assert.length(1))
         .pipe(assert.first(function (d) { d.contents.toString().should.eql('wadap\ndoe'); }))
         .pipe(assert.end(done));
     });
 
-    it('should concat buffers', function (done) {
+    it('should importify buffers', function (done) {
       test([65, 66], [67, 68], [69, 70])
-        .pipe(concat('test.js'))
+        .pipe(importify('test.js'))
         .pipe(assert.length(1))
         .pipe(assert.first(function (d) { d.contents.toString().should.eql('AB\nCD\nEF'); }))
         .pipe(assert.end(done));
@@ -81,7 +81,7 @@ describe('gulp-concat', function() {
 
     it('should preserve mode from files', function (done) {
       test('wadaup')
-        .pipe(concat('test.js'))
+        .pipe(importify('test.js'))
         .pipe(assert.length(1))
         .pipe(assert.first(function (d) { d.stat.mode.should.eql(0666); }))
         .pipe(assert.end(done));
@@ -89,7 +89,7 @@ describe('gulp-concat', function() {
 
     it('should take path from latest file', function (done) {
       gulp.src([fixtures('*'), thirdPath])
-        .pipe(concat('test.js'))
+        .pipe(importify('test.js'))
         .pipe(assert.length(1))
         .pipe(assert.first(function (newFile) {
           var newFilePath = path.resolve(newFile.path);
@@ -101,7 +101,7 @@ describe('gulp-concat', function() {
 
     it('should preserve relative path from files', function (done) {
       test('wadap', 'doe')
-        .pipe(concat('test.js'))
+        .pipe(importify('test.js'))
         .pipe(assert.length(1))
         .pipe(assert.first(function (d) { d.relative.should.eql('test.js'); }))
         .pipe(assert.end(done));
@@ -110,7 +110,7 @@ describe('gulp-concat', function() {
     it('should support source maps', function (done) {
       gulp.src(fixtures('*'))
         .pipe(sourcemaps.init())
-        .pipe(concat('all.js'))
+        .pipe(importify('all.js'))
         .pipe(assert.length(1))
         .pipe(assert.first(function (d) {
           d.sourceMap.sources.should.have.length(2);
@@ -121,22 +121,22 @@ describe('gulp-concat', function() {
 
     describe('should not fail if no files were input', function () {
       it('when argument is a string', function(done) {
-        var stream = concat('test.js');
+        var stream = importify('test.js');
         stream.end();
         done();
       });
-  
+
       it('when argument is an object', function(done) {
-        var stream = concat({path: 'new.txt'});
+        var stream = importify({path: 'new.txt'});
         stream.end();
         done();
       });
     });
-    
+
     describe('options', function () {
       it('should support newLine', function (done) {
         test('wadap', 'doe')
-          .pipe(concat('test.js', {newLine: '\r\n'}))
+          .pipe(importify('test.js', {newLine: '\r\n'}))
           .pipe(assert.length(1))
           .pipe(assert.first(function (d) { d.contents.toString().should.eql('wadap\r\ndoe'); }))
           .pipe(assert.end(done));
@@ -144,7 +144,7 @@ describe('gulp-concat', function() {
 
       it('should support empty newLine', function (done) {
         test('wadap', 'doe')
-          .pipe(concat('test.js', {newLine: ''}))
+          .pipe(importify('test.js', {newLine: ''}))
           .pipe(assert.length(1))
           .pipe(assert.first(function (d) { d.contents.toString().should.eql('wadapdoe'); }))
           .pipe(assert.end(done));
@@ -154,13 +154,13 @@ describe('gulp-concat', function() {
     describe('with object as argument', function () {
       it('should throw without path', function () {
         (function() {
-          concat({ path: undefined });
-        }).should.throw('Missing path in file options for gulp-concat');
+          importify({ path: undefined });
+        }).should.throw('Missing path in file options for gulp-importify');
       });
 
       it('should create file based on path property', function (done) {
         test('wadap')
-          .pipe(concat({path: 'new.txt'}))
+          .pipe(importify({path: 'new.txt'}))
           .pipe(assert.length(1))
           .pipe(assert.first(function (d) { d.path.should.eql('new.txt'); }))
           .pipe(assert.end(done));
@@ -168,7 +168,7 @@ describe('gulp-concat', function() {
 
       it('should calculate relative path from cwd and path in arguments', function (done) {
         test('wadap')
-          .pipe(concat({cwd: '/home/contra', path: '/home/contra/test/new.txt'}))
+          .pipe(importify({cwd: '/home/contra', path: '/home/contra/test/new.txt'}))
           .pipe(assert.length(1))
           .pipe(assert.first(function (d) { d.relative.should.eql('test/new.txt'); }))
           .pipe(assert.end(done));
