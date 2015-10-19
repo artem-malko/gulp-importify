@@ -5,6 +5,7 @@ var path = require('path');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 var File = gutil.File;
+var os = require('os');
 var Concat = require('concat-with-sourcemaps');
 
 // file can be a vinyl file object or a string
@@ -35,6 +36,7 @@ module.exports = function(file, options) {
     }
 
     function bufferContents(file, enc, cb) {
+         var pathToFile;
 
         // ignore empty files
         if (file.isNull()) {
@@ -69,6 +71,12 @@ module.exports = function(file, options) {
 
         extension = path.parse(file.path).ext.substr(1);
 
+        pathToFile = file.relative;
+
+        if ((/^win/i).test(os.platform())) {
+            pathToFile = file.relative.toString().replace(/\\/g, '/');
+        }
+
         // add file or import of file to concat instance
         switch (options.cssPreproc) {
             case 'scss':
@@ -77,14 +85,14 @@ module.exports = function(file, options) {
                 if (extension === 'css') {
                     importified.add(file.relative, file.contents, file.sourceMap);
                 } else {
-                    importified.add(file.relative, '@import "' + file.relative + '";\n', file.sourceMap);
+                    importified.add(file.relative, '@import "' + pathToFile + '";\n', file.sourceMap);
                 }
                 break;
             case 'stylus':
-                importified.add(file.relative, '@import "' + file.relative + '";\n', file.sourceMap);
+                importified.add(file.relative, '@import "' + pathToFile + '";\n', file.sourceMap);
                 break;
             default:
-                importified.add(file.relative, '@import "' + file.relative + '";\n', file.sourceMap);
+                importified.add(file.relative, '@import "' + pathToFile + '";\n', file.sourceMap);
                 break;
         }
 
