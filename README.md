@@ -11,7 +11,7 @@ var scssFilesToConcat = [
 ]
 
 gulp.task('compile-css', function () {
-    return gulp.src(scssFilesToConcat)
+    return gulp.src(scssFilesToConcat, { base: process.cwd() })
             .pipe(scss())
             .pipe(gulp.dest('.'));
 });
@@ -54,7 +54,7 @@ var scssFilesToConcat = [
 ]
 
 gulp.task('compile-css', function () {
-    return gulp.src(scssFilesToConcat)
+    return gulp.src(scssFilesToConcat, { base: process.cwd() })
             .pipe(importify('main.scss', {
                 cssPreproc: 'scss' 
             }))
