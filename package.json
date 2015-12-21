@@ -1,7 +1,7 @@
 {
   "name": "gulp-importify",
   "description": "Gulp-plugin for using css (scss, less, stylus) imports for files from multiple source.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/artem-malko/gulp-importify.git"

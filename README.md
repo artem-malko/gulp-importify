@@ -2,7 +2,7 @@
 
 [![NPM version][npm-image]][npm-url]
 
-There is one problem with all css-preprocessors: if we want to use them, we have to create only one entry point and we have to import all styles there. Only in that case all css-preprocessors will work as expected: sourcemaps will be generated correctly, there will be verbose log in case of error and so on. But, what should we do, if we need to compile css from multiple sources and we would like to store variables in one file and use them in another? There is a small example:
+There is one problem with all css-preprocessors: if we want to use them, we have to create only one entry point and we have to import all styles there. Only in that case all css-preprocessors will work as expected: sourcemaps will be generated correctly, there will be verbose log in case of error and so on. But, what should we do, if we need to compile css from multiple sources and we would like to store variables in one file and use them in another? There is a small example (for scss):
 
 ```javascript
 var scssFilesToConcat = [
@@ -41,7 +41,7 @@ Gulp-importify will process all files you passed to the gulp.src and create temp
 
 And everything will work: verbose error log, sourcemaps and so on.
 
-Gulp-importify will import css files as its in case of using less or scss (sass), because these preprocessors can't import css-files. And sourcemaps (and error log), still be working.
+Gulp-importify will import css files as its in case of using less, stylus or scss (sass), because these preprocessors can't import css-files. And sourcemaps (and error log), still be working.
 
 ## Usage
 
@@ -77,7 +77,7 @@ Type: `String`
 
 Default: `scss`
 
-The name of used css-preprocessor. The property of the second argument (object).
+The name of used css-preprocessor. The property of the second argument (object). `stylus` and `less` is supported too.
 
 ## Thanks
 
